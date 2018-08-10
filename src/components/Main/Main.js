@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, TextInput, Platform, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, Button, TextInput, Platform, StyleSheet, Text, View} from 'react-native';
 import Ques from '../Ques/Ques';
 
 export default class Main extends Component<Props> {
@@ -52,10 +52,18 @@ export default class Main extends Component<Props> {
             <View style={styles.header}>
                  <Text style={styles.headerText}>- Math -</Text>
              </View>
+             <ScrollView
+              contentContainerStyle={{
+                flex: 1,
+                justifyContent: 'space-between'
+              }}>
              <Ques num1={this.state.num1}
                num2={this.state.num2}
                points={this.state.points}
                flag={this.state.flag}/>
+               </ScrollView>
+
+
              <TextInput
                        style={styles.textInput}
                        keyboardType = 'numeric'
@@ -66,7 +74,8 @@ export default class Main extends Component<Props> {
                        underlineColorAndroid='transparent'>
             </TextInput>
             <Button onPress={() => this.placeSubmitHandler((this.state.num1+this.state.num2).toString())}
-            title="Press Me" />
+            title="Answer"
+            color= '#08563e' />
       </View>
     );
   }
@@ -97,5 +106,6 @@ const styles = StyleSheet.create({
       borderTopWidth:2,
       borderTopColor: '#ededed'
    },
+
 
 });

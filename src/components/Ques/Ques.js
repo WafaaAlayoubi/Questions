@@ -11,9 +11,9 @@ const ques = (props) => {
    }
    return (
    <View style={styles.mainView}>
-     <Text style={styles.QuesText}>{props.num1} + {props.num2}</Text>
-     <Text style={styles.points}>{props.points}</Text>
-   </View>
+     <Text style={styles.QuesText}>Qustion: {props.num1} + {props.num2}</Text>
+     <Text style={styles.points}>Points: {props.points}</Text>
+    </View>
 );
 };
 
@@ -21,18 +21,19 @@ const styles = StyleSheet.create({
    QuesText: {
      flex: 1,
      position: 'absolute', top: 100,
-     fontSize: 30,
+     fontSize: 40,
      padding: 20
    },
    mainView: {
      flex: 1,
      alignItems: 'center',
+     backgroundColor: '#dbe0de'
 
    },
    points: {
       flex: 1,
-      position: 'absolute', top: 160,
-      fontSize: 40,
+      position: 'absolute', top: 180,
+      fontSize: 50,
       padding: 20
    }
 });

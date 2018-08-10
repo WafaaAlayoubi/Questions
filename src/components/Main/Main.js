@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {Button, TextInput, Platform, StyleSheet, Text, View} from 'react-native';
-
-const  num1 = Math.floor(Math.random() * 10) + 1;
-const num2 = Math.floor(Math.random() * 10) + 1;
-
+import Ques from '../Ques/Ques';
 
 export default class Main extends Component<Props> {
    state = {
        points: 0,
-       userAns: null
+       userAns: null,
+       flag: true,
+       num1: Math.floor(Math.random() * 10) + 1,
+       num2: Math.floor(Math.random() * 10) + 1
      };
 
      userAnswerOnChangeHandler = val => {
@@ -22,12 +22,22 @@ export default class Main extends Component<Props> {
       alert("True Answer");
       this.setState(prevState =>{
          return {
-           points: prevState.points + 2
+           points: prevState.points + 2,
+           num1: Math.floor(Math.random() * 10) + 1,
+           num2: Math.floor(Math.random() * 10) + 1
         };
       });
+
     }
     else {
       alert("Wrong Answer");
+      if(this.state.points === 0){
+         this.setState(prevState =>{
+           return {
+              flag: false
+          };
+         });
+      }
       this.setState(prevState =>{
         return {
            points:  Math.floor(prevState.points / 2)
@@ -42,10 +52,10 @@ export default class Main extends Component<Props> {
             <View style={styles.header}>
                  <Text style={styles.headerText}>- Math -</Text>
              </View>
-             <View style={styles.mainView}>
-               <Text style={styles.QuesText}>{num1} + {num2}</Text>
-               <Text style={styles.points}>{this.state.points}</Text>
-             </View>
+             <Ques num1={this.state.num1}
+               num2={this.state.num2}
+               points={this.state.points}
+               flag={this.state.flag}/>
              <TextInput
                        style={styles.textInput}
                        keyboardType = 'numeric'
@@ -55,7 +65,7 @@ export default class Main extends Component<Props> {
                        value={this.state.userAns}
                        underlineColorAndroid='transparent'>
             </TextInput>
-            <Button onPress={() => this.placeSubmitHandler((num1+num2).toString())}
+            <Button onPress={() => this.placeSubmitHandler((this.state.num1+this.state.num2).toString())}
             title="Press Me" />
       </View>
     );
@@ -78,17 +88,7 @@ const styles = StyleSheet.create({
          fontSize: 22,
          padding: 20
      },
-     mainView: {
-        flex: 1,
-       alignItems: 'center',
 
-     },
-     QuesText: {
-        flex: 1,
-        position: 'absolute', top: 100,
-        fontSize: 30,
-        padding: 20
-     },
      textInput: {
       alignSelf: 'stretch',
       color: '#fff',
@@ -97,10 +97,5 @@ const styles = StyleSheet.create({
       borderTopWidth:2,
       borderTopColor: '#ededed'
    },
-   points: {
-      flex: 1,
-      position: 'absolute', top: 160,
-      fontSize: 40,
-      padding: 20
-   }
+
 });

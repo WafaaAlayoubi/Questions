@@ -11,7 +11,7 @@ const ques = (props) => {
    }
    return (
    <View style={styles.mainView}>
-     <Text style={styles.QuesText}>Qustion: {props.num1} + {props.num2}</Text>
+     <Text style={styles.QuesText}>Qustion: {props.num1} {props.sign} {props.num2}</Text>
      <Text style={styles.points}>Points: {props.points}</Text>
     </View>
 );

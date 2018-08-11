@@ -3,13 +3,64 @@ import {ScrollView, Button, TextInput, Platform, StyleSheet, Text, View} from 'r
 import Ques from '../Ques/Ques';
 
 export default class Main extends Component<Props> {
-   state = {
-       points: 0,
-       userAns: null,
-       flag: true,
-       num1: Math.floor(Math.random() * 10) + 1,
-       num2: Math.floor(Math.random() * 10) + 1
-     };
+   constructor() {
+      super();
+
+      this.signChangeHandler = this.signChangeHandler.bind(this);
+
+      this.state = {
+          points: 0,
+          userAns: null,
+          flag: true,
+          num1: Math.floor(Math.random() * 10) + 1,
+          num2: Math.floor(Math.random() * 10) + 1,
+          sign: "+"
+        };
+       this.ans = 0;
+   }
+
+
+     signChangeHandler = () => {
+
+       let num = Math.round((Math.round(Math.random() * 10))/3);
+       switch(num){
+         case 0:
+            this.ans = this.state.num1 - this.state.num2;
+            this.setState(prevState =>{
+              return {
+                sign: "-"
+             };
+          });break;
+
+          case 1:
+             this.ans = this.state.num1 + this.state.num2;
+             this.setState(prevState =>{
+               return {
+                 sign: "+"
+              };
+           });break;
+
+           case 2:
+             this.ans = this.state.num1 * this.state.num2;
+             this.setState(prevState =>{
+               return {
+                 sign: "*"
+              };
+           });break;
+
+           case 3:
+             this.ans = Math.floor(this.state.num1 / this.state.num2);
+             this.setState(prevState =>{
+               return {
+                 sign: "/"
+              };
+           });break;
+
+        default:
+         alert(num);
+       };
+
+    };
 
      userAnswerOnChangeHandler = val => {
         this.setState({
@@ -18,16 +69,18 @@ export default class Main extends Component<Props> {
      };
 
     placeSubmitHandler = (ans) => {
+      this.textInput.clear();
     if (this.state.userAns === ans) {
       alert("True Answer");
-      this.setState(prevState =>{
+      this.setState(prevState => {
          return {
            points: prevState.points + 2,
            num1: Math.floor(Math.random() * 10) + 1,
-           num2: Math.floor(Math.random() * 10) + 1
+           num2: Math.floor(Math.random() * 10) + 1,
         };
-      });
-
+     }, () => {
+        this.signChangeHandler();
+     });
     }
     else {
       alert("Wrong Answer");
@@ -57,14 +110,17 @@ export default class Main extends Component<Props> {
                 flex: 1,
                 justifyContent: 'space-between'
               }}>
+
              <Ques num1={this.state.num1}
                num2={this.state.num2}
                points={this.state.points}
-               flag={this.state.flag}/>
+               flag={this.state.flag}
+               sign={this.state.sign}/>
                </ScrollView>
 
 
              <TextInput
+                       ref={input => { this.textInput = input }}
                        style={styles.textInput}
                        keyboardType = 'numeric'
                        placeholder='>Your Answer'
@@ -73,7 +129,7 @@ export default class Main extends Component<Props> {
                        value={this.state.userAns}
                        underlineColorAndroid='transparent'>
             </TextInput>
-            <Button onPress={() => this.placeSubmitHandler((this.state.num1+this.state.num2).toString())}
+            <Button onPress={() => this.placeSubmitHandler((this.ans).toString())}
             title="Answer"
             color= '#08563e' />
       </View>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ScrollView, Button, TextInput, Platform, StyleSheet, Text, View} from 'react-native';
 import Ques from '../Ques/Ques';
 
-export default class Main extends Component<Props> {
+export default class MathView extends Component<Props> {
    constructor() {
       super();
 
